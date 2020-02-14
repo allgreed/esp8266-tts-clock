@@ -21,7 +21,7 @@ const int SERIAL_BAUD = 115200;
 const int NTP_UPDATE_INTERVAL_IN_MINUTES = 60;
 const int DISPLAY_MAX_BRIGHTNESS = 0x0a;
 const int WIFI_CONNECTION_CHECK_INTERVAL = 500; // miliseconds
-const int MAIN_LOOP_DELAY = 15000; // miliseconds
+const int MAIN_LOOP_DELAY = 5000; // miliseconds
 
 // derivative
 const int NTP_UPDATE_INTERVAL = NTP_UPDATE_INTERVAL_IN_MINUTES * 60 * 1000; // miliseconds
@@ -63,13 +63,19 @@ void loop()
 
     int hours = timeClient.getHours();
     int minutes = timeClient.getMinutes();
+    int seconds = timeClient.getSeconds();
 
     int dayToHoursReminder = hours >= WAKE_UP_HOUR
         ? HOURS_IN_DAY
         : 0
     ;
-
-    int minutesDiff = (MINUTES_IN_HOUR - minutes) % MINUTES_IN_HOUR;
+    
+    int secondsToMinutesBorrow = seconds == 0
+        ? 0 
+        : 1
+    ;
+    
+    int minutesDiff = (MINUTES_IN_HOUR - minutes - secondsToMinutesBorrow) % MINUTES_IN_HOUR;
 
     int minutesToHoursBorrow = minutesDiff == 0
         ? 0 
