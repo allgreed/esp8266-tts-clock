@@ -20,3 +20,6 @@ TM1637 DIO <-> D2
 This will *not* works as is, you need change the wifi credentials (under `// wifi` section)
 
 I suggest tweaking the time settings `TZ_DIFF_FROM_UTC_IN_HOURS` and `WAKE_UP_HOUR` as well, unless you live in UTC+1 timezone and have same the sleeping schedule as I do.
+
+## Other considerations
+I see no difference whatsoever with setting different brightness levels

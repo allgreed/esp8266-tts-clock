@@ -15,6 +15,7 @@ const char * PASSWORD = "<WIFRU_PASS>";
 // hard technical
 const int CLK_DISPLAY_PIN = 5; // D1
 const int DIO_DISPLAY_PIN = 4; // D2
+const int COLON_DISPLAY_BITMASK = 0b01000000;
 
 // soft technical
 const int SERIAL_BAUD = 115200;
@@ -69,12 +70,12 @@ void loop()
         ? HOURS_IN_DAY
         : 0
     ;
-    
+
     int secondsToMinutesBorrow = seconds == 0
         ? 0 
         : 1
     ;
-    
+ 
     int minutesDiff = (MINUTES_IN_HOUR - minutes - secondsToMinutesBorrow) % MINUTES_IN_HOUR;
 
     int minutesToHoursBorrow = minutesDiff == 0
@@ -87,7 +88,7 @@ void loop()
     // display takes a single 4 digit number, need to shift hours by 2 digits
     int timeFormattedForDisplay = hoursDiff * 100 + minutesDiff;
 
-    display.showNumberDec(timeFormattedForDisplay);
+    display.showNumberDecEx(timeFormattedForDisplay, 0 | COLON_DISPLAY_BITMASK);
 
     delay(MAIN_LOOP_DELAY);
 }
