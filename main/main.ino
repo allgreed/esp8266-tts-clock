@@ -3,10 +3,8 @@
 #include <TM1637Display.h>
 #include <NTPClient.h>
 
+#include "business.h"
 
-// preferences
-const int TZ_DIFF_FROM_UTC_IN_HOURS = 1;
-const int WAKE_UP_HOUR = 9;
 
 // wifi
 const char * SSID     = "<SSID>";
@@ -27,11 +25,6 @@ const int MAIN_LOOP_DELAY = 5000; // miliseconds
 // derivative
 const int NTP_UPDATE_INTERVAL = NTP_UPDATE_INTERVAL_IN_MINUTES * 60 * 1000; // miliseconds
 const int TZ_DIFF_FROM_UTC = TZ_DIFF_FROM_UTC_IN_HOURS * 60 * 60; // seconds
-
-// cpt. obvious
-const int MINUTES_IN_HOUR = 60;
-const int HOURS_IN_DAY = 24;
-
 
 TM1637Display display(CLK_DISPLAY_PIN, DIO_DISPLAY_PIN);
 WiFiUDP ntpUDP;
@@ -62,33 +55,11 @@ void loop()
 {
     timeClient.update();
 
-    int hours = timeClient.getHours();
-    int minutes = timeClient.getMinutes();
-    int seconds = timeClient.getSeconds();
+    Moment m = Moment(timeClient.getHours(), timeClient.getMinutes(), timeClient.getSeconds());
 
-    int dayToHoursReminder = hours >= WAKE_UP_HOUR
-        ? HOURS_IN_DAY
-        : 0
-    ;
+    Timedelta t = computeRemainingSleepTime(m);
 
-    int secondsToMinutesBorrow = seconds == 0
-        ? 0 
-        : 1
-    ;
- 
-    int minutesDiff = (MINUTES_IN_HOUR - minutes - secondsToMinutesBorrow) % MINUTES_IN_HOUR;
-
-    int minutesToHoursBorrow = minutesDiff == 0
-        ? 0 
-        : 1
-    ;
-
-    int hoursDiff = WAKE_UP_HOUR - hours + dayToHoursReminder - minutesToHoursBorrow;
-
-    // display takes a single 4 digit number, need to shift hours by 2 digits
-    int timeFormattedForDisplay = hoursDiff * 100 + minutesDiff;
-
-    display.showNumberDecEx(timeFormattedForDisplay, 0 | COLON_DISPLAY_BITMASK);
+    display.showNumberDecEx(formatTimedeltaForDisplay(t), 0 | COLON_DISPLAY_BITMASK);
 
     delay(MAIN_LOOP_DELAY);
 }
