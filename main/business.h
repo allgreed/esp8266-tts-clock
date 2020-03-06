@@ -7,31 +7,31 @@ const int HOURS_IN_DAY = 24;
 
 struct Moment
 {
+    int hours;
+    int minutes;
+    int seconds;
+
     Moment(int hours, int minutes, int seconds)
     {
         this->hours = hours;
         this->minutes = minutes;
         this->seconds = seconds;
     }
-
-    int hours;
-    int minutes;
-    int seconds;
 };
 
 
 struct Timedelta 
 {
+    int hours;
+    int minutes;
+    int seconds;
+
     Timedelta(int hours, int minutes, int seconds)
     {
         this->hours = hours;
         this->minutes = minutes;
         this->seconds = seconds;
     }
-
-    int hours;
-    int minutes;
-    int seconds;
 };
 
 

@@ -1,0 +1,7 @@
+# intermediate gtest files
+gtest-all.o
+gtest_main.a
+gtest_main.o
+
+# test artifacts
+main.out
