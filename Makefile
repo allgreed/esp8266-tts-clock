@@ -56,7 +56,7 @@ gtest_main.a : gtest-all.o gtest_main.o
 
 .PHONY: main
 DEPS := main/conf.h main/business.h
-FILES := main/unit.cpp
+FILES := test/unit.cpp
 main : $(FILES) $(DEPS) gtest_main.a
 	$(CC) $(CPPFLAGS) $(CXXFLAGS) $(CFLAGS) -lpthread $(FILES) gtest_main.a -o $@.out
 	@./$@.out

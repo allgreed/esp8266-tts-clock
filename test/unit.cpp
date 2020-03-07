@@ -1,4 +1,4 @@
-#include "business.h"
+#include "../main/business.h"
 #include "gtest/gtest.h"
 
 TEST(Time, computeRemainingSleepTime)
