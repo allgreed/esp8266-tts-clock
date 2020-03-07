@@ -33,6 +33,18 @@ TEST(Time, computeRemainingSleepTime)
     EXPECT_EQ(t.hours, 7);
     EXPECT_EQ(t.minutes, 58);
     EXPECT_EQ(t.seconds, 0);
+
+    t = computeRemainingSleepTime(Moment(0,59,0));
+
+    EXPECT_EQ(t.hours, 8);
+    EXPECT_EQ(t.minutes, 1);
+    EXPECT_EQ(t.seconds, 0);
+
+    t = computeRemainingSleepTime(Moment(0,59,12));
+
+    EXPECT_EQ(t.hours, 8);
+    EXPECT_EQ(t.minutes, 0);
+    EXPECT_EQ(t.seconds, 0);
 }
 
 TEST(Time, formatTimedeltaForDisplay)
