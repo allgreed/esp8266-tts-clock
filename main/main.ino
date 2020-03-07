@@ -6,10 +6,6 @@
 #include "business.h"
 
 
-// wifi
-const char * SSID     = "<SSID>";
-const char * PASSWORD = "<WIFRU_PASS>";
-
 // hard technical
 const int CLK_DISPLAY_PIN = 5; // D1
 const int DIO_DISPLAY_PIN = 4; // D2
